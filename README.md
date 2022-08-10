@@ -1,63 +1,67 @@
-Simple Shell project 0x16.c - Sodash -
+Simple Shell project 
+
+- Smashe -
 
 This is a simple UNIX command interpreter based on bash and Sh.
+
 Overview
 
-Sodashy is a sh-compatible command language interpreter that executes commands read from the standard input or from a file.
+Smashe is a sh-compatible command language interpreter that executes commands read from the standard input or from a file.
 Invocation
 
-Usage: Sodash Sodash is started with the standard input connected to the terminal. To start, compile all .c located in this repository by using this command:
+Usage: Smashe is started with the standard input connected to the terminal. To start, compile all .c located in this repository by using this command:
 
-gcc -Wall -Werror -Wextra -pedantic *.c -o sodash
-./sodash
+gcc -Wall -Werror -Wextra -pedantic *.c -o smashe
+./smashe
 
-Sodash is allowed to be invoked interactively and non-interactively. If sodash is invoked with standard input not connected to a terminal, it reads and executes received commands in order.
+Smashe is allowed to be invoked interactively and non-interactively. If sodash is invoked with standard input not connected to a terminal, it reads and executes received commands in order.
 
 Example:
 
-$ echo "echo 'alx'" | ./sodash
+$ echo "echo 'alx'" | ./smashe
 'alx'
 $
 
-When sodash is invoked with standard input connected to a terminal (determined by isatty(3), the interactive mode is opened. sodash Will be using the following prompt ^-^ .
+When smashe is invoked with standard input connected to a terminal (determined by isatty(3), the interactive mode is opened. smashe Will be using the following prompt ^-^ .
 
 Example:
 
-$./sodash
+$./smashe
 ^-^
 
-If a command line argument is invoked, sodash will take that first argument as a file from which to read commands.
+If a command line argument is invoked, smashe will take that first argument as a file from which to read commands.
 
 Example:
 
 $ cat text
 echo 'alx'
-$ ./sodash text
+$ ./smashe text
 'alx'
 $
 
 Environment
 
-Upon invocation, sodash receives and copies the environment of the parent process in which it was executed. This environment is an array of name-value strings describing variables in the format NAME=VALUE. A few key environmental variables are:
+Upon invocation, smashe receives and copies the environment of the parent process in which it was executed. This environment is an array of name-value strings describing variables in the format NAME=VALUE. A few key environmental variables are:
+
 HOME
 
 The home directory of the current user and the default directory argument for the cd builtin command.
 
-$ echo "echo $HOME" | ./sodash
+$ echo "echo $HOME" | ./smashe
 /home/vagrant
 
 PWD
 
 The current working directory as set by the cd command.
 
-$ echo "echo $PWD" | ./sodash
+$ echo "echo $PWD" | ./smashe
 /home/vagrant/alx/simple_shell
 
 OLDPWD
 
 The previous working directory as set by the cd command.
 
-$ echo "echo $OLDPWD" | ./sodash
+$ echo "echo $OLDPWD" | ./smashe
 /home/vagrant/alx/bog-062019-test_suite
 
 PATH
@@ -69,14 +73,15 @@ $ echo "echo $PATH" | ./r a directory containing an executable file by that name
 
 Exit Status
 
-sodash returns the exit status of the last command executed, with zero indicating success and non-zero indicating failure. If a command is not found, the return status is 127; if a command is found but is not executable, the return status is 126. All builtins return zero on success and one or two on incorrect usage (indicated by a corresponding error message).
+smashe returns the exit status of the last command executed, with zero indicating success and non-zero indicating failure. If a command is not found, the return status is 127; if a command is found but is not executable, the return status is 126. All builtins return zero on success and one or two on incorrect usage (indicated by a corresponding error message).
+
 Signals
 
-While running in interactive mode, sodash ignores the keyboard input ctrl+c. Alternatively, an input of End-Of-File ctrl+d will exit the program.
+While running to interactive mode, smashe ignores the keyboard input ctrl+c. Alternatively, an input of End-Of-File ctrl+d will exit the program.
 
 User hits ctrl+d in the fourth command.
 
-$ ./sodash
+$ ./smashe
 ^-^ ^C
 ^-^ ^C
 ^-^ ^C
@@ -84,14 +89,14 @@ $ ./sodash
 
 Variable Replacement
 
-sodash interprets the $ character for variable replacement.
+smashe interprets the $ character for variable replacement.
 $ENV_VARIABLE
 
 ENV_VARIABLE is substituted with its value.
 
 Example:
 
-$ echo "echo $PWD" | ./sodash
+$ echo "echo $PWD" | ./smashe
 /home/vagrant/alx/simple_shell
 
 $?
@@ -100,7 +105,7 @@ $?
 
 Example:
 
-$ echo "echo $?" | ./sodash
+$ echo "echo $?" | ./smashe
 0
 
 $$
@@ -109,23 +114,24 @@ The second $ is substitued with the current process ID.
 
 Example:
 
-$ echo "echo $$" | ./sodash
+$ echo "echo $$" | ./smashe
 3855
 
 Comments
 
-sodash ignores all words and characters preceeded by a # character on a line.
+smashe ignores all words and characters preceeded by a # character on a line.
 
 Example:
 
-$ echo "echo 'alx' #this will be ignored!" | ./sodash
+$ echo "echo 'alx' #this will be ignored!" | ./smashe
 'alx'
-sodash
+
+smashe
 /home/vagrant/.cargo/bin:/home/vagrant/.local/bin:/home/vagrant/.rbenv/plugins/ruby-build/bin:/home/vagrant/.rbenv/shims:/home/vagrant/.rbenv/bin:/home/vagrant/.nvm/versions/node/v10.15.3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/vagrant/.cargo/bin:/home/vagrant/workflow:/home/vagrant/.local/bin
 
 Command Execution
 
-After receiving a command, sodash tokenizes it into words using " " as a delimiter. The first word is considered the command and all remaining words are considered arguments to that command. sodash then proceeds with the following actions:
+After receiving a command, smashe tokenizes it into words using " " as a delimiter. The first word is considered the command and all remaining words are considered arguments to that command. smashe then proceeds with the following actions:
 
     If the first character of the command is neither a slash (\) nor dot (.), the shell searches for it in the list of shell builtins. If there exists a builtin by that name, the builtin is invoked.
     If the first character of the command is none of a slash (\), dot (.), nor builtin, sodash searches each element of the PATH environmental variable for
@@ -134,10 +140,10 @@ After receiving a command, sodash tokenizes it into words using " " as a delimit
 
 Exit Status
 
-sodash returns the exit status of the last command executed, with zero indicating success and non-zero indicating failure. If a command is not found, the return status is 127; if a command is found but is not executable, the return status is 126. All builtins return zero on success and one or two on incorrect usage (indicated by a corresponding error message).
+smashe returns the exit status of the last command executed, with zero indicating success and non-zero indicating failure. If a command is not found, the return status is 127; if a command is found but is not executable, the return status is 126. All builtins return zero on success and one or two on incorrect usage (indicated by a corresponding error message).
 Signals
 
-While running in interactive mode, sodash ignores the keyboard input ctrl+c. Alternatively, an input of End-Of-File ctrl+d will exit the program.
+While running in interactive mode, smashe ignores the keyboard input ctrl+c. Alternatively, an input of End-Of-File ctrl+d will exit the program.
 
 User hits ctrl+d in the fourth command.
 
@@ -149,10 +155,10 @@ $ ./sodash
 
 Variable Replacement
 
-sodash interprets the $ character for variable replacement.
-$ENV/sodash
+smashe interprets the $ character for variable replacement.
+$ENV/smashe
 ./shellby: 1: error!: not found
-$ echo "echo 'my name is' && echo 'alx'" | ./sodash
+$ echo "echo 'my name is' && echo 'alx'" | ./smashe
 'my name is'
 'alx'
 
@@ -162,12 +168,14 @@ command1 || command2: command2 is executed if, and only if, command1 returns a n
 
 Example:
 
-$ echo "error! || echo 'wait for it'" | ./sodash
-./sodash: 1: error!: not found
+$ echo "error! || echo 'wait for it'" | ./smashe
+./smashe: 1: error!: not found
 'wait for it'
 
 The operators && and || have equal precedence, followed by ;.
+
 Builtin Commands
+
 cd
 
     Usage: cd [DIRECTORY]
@@ -178,7 +186,7 @@ cd
     The environment variables PWD and OLDPWD are updated after a change of directory
 Example:
 
-$ ./sodash
+$ ./smashe
 ^-^ pwd
 /home/vagrant/alx/simple_shell
 $ cd ../
@@ -197,7 +205,7 @@ exit
 
 Example:
 
-$ ./sodash
+$ ./smashe
 $ exit
 
 env
@@ -207,7 +215,7 @@ env
 
 Example:
 
-$ ./sodash
+$ ./smashe
 $ env
 NVM_DIR=/home/vagrant/.nvm
 ...
@@ -220,10 +228,10 @@ setenv
 
 Example:
 
-$ ./sodash
+$ ./smashe
 $ setenv NAME Alx
 $ echo $NAME
-Holberton
+Alx
 
 unsetenv
 
@@ -233,7 +241,7 @@ unsetenv
 
 Example:
 
-$ ./sodash
+$ ./smashe
 $ setenv NAME Alx
 $ unsetenv NAME
 $ echo $NAME
@@ -247,4 +255,4 @@ Authors & Copyrights
 
 More information
 
-Sodash is a simple shell unix command interpreter that is part of the alx low level programming module at Alx Software Engineering School and is intended to emulate the basics sh shell. All the information given in this README is based on the sodash and bash man (1) pages.
+Smashe is a simple shell unix command interpreter that is part of the alx low level programming module at Alx Software Engineering School and is intended to emulate the basics sh shell. All the information given in this README is based on the smashe and bash man (1) pages.
